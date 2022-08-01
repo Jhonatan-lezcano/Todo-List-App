@@ -1,5 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Animated from "react-native-reanimated";
+
 import { lists } from "../../utils/tempData";
 import { colors } from "../../theme/colors";
 import { size } from "../../theme/fonts";
@@ -7,35 +9,37 @@ import { size } from "../../theme/fonts";
 interface Props {
   list: lists;
   index: number;
+  perspectiveStyle: any;
 }
 
-const List = ({ list, index }: Props) => {
+const List = ({ list, index, perspectiveStyle }: Props) => {
   const { name, color, todos } = list;
   const completed = todos.filter(item => item.complete).length;
   const pending = todos.length - completed;
 
-  console.log(completed);
-
   return (
-    <View
+    <Animated.View
       style={[
         styles.listContainer,
-        { backgroundColor: color, marginLeft: index > 0 ? 0 : 32 },
+        perspectiveStyle,
+        { marginLeft: index > 0 ? 0 : 32 },
       ]}
     >
-      <Text style={[styles.listTitle, styles.textColor]} numberOfLines={1}>
-        {name}
-      </Text>
+      <View style={[styles.list, { backgroundColor: color }]}>
+        <Text style={[styles.listTitle, styles.textColor]} numberOfLines={1}>
+          {name}
+        </Text>
 
-      <View style={styles.containerInfo}>
-        <Text style={[styles.textColor, styles.count]}>{completed}</Text>
-        <Text style={[styles.textColor]}>Completed</Text>
+        <View style={styles.containerInfo}>
+          <Text style={[styles.textColor, styles.count]}>{completed}</Text>
+          <Text style={[styles.textColor]}>Completed</Text>
+        </View>
+        <View style={styles.containerInfo}>
+          <Text style={[styles.textColor, styles.count]}>{pending}</Text>
+          <Text style={[styles.textColor]}>Pending to do</Text>
+        </View>
       </View>
-      <View style={styles.containerInfo}>
-        <Text style={[styles.textColor, styles.count]}>{pending}</Text>
-        <Text style={[styles.textColor]}>Pending to do</Text>
-      </View>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -51,12 +55,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   listContainer: {
+    height: 275,
+    marginHorizontal: 12,
+    marginVertical: 18,
+    width: 200,
+  },
+  list: {
     alignItems: "center",
     borderRadius: 6,
-    marginHorizontal: 12,
     paddingHorizontal: 16,
     paddingVertical: 32,
-    width: 200,
+    width: "100%",
+    height: "100%",
   },
   listTitle: {
     fontSize: size.font22,

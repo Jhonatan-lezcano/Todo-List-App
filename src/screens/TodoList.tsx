@@ -11,11 +11,12 @@ import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../theme/colors";
 import { size } from "../theme/fonts";
 import { ListsData } from "../utils/tempData";
-import List from "../components/molecules/List";
+// import List from "../components/molecules/List";
 import Spacer from "../components/atoms/Spacer";
+import AnimatedScrollView from "../components/AnimatedScrollView/AnimatedScrollView";
+import List from "../components/molecules/List";
 
 const TodoList = () => {
-  console.log(size.font18);
   return (
     <View style={styles.container}>
       <View style={styles.containerTitle}>
@@ -37,7 +38,7 @@ const TodoList = () => {
 
       <Spacer verticalSpacing={48} />
 
-      <View style={styles.containerSlide}>
+      {/* <View style={styles.containerSlide}>
         <FlatList
           keyExtractor={item => item.id.toString()}
           data={ListsData}
@@ -45,7 +46,8 @@ const TodoList = () => {
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => <List list={item} index={index} />}
         />
-      </View>
+      </View> */}
+      <AnimatedScrollView boxes={ListsData} />
     </View>
   );
 };
