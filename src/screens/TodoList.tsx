@@ -1,24 +1,26 @@
-import React from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  FlatList,
-} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View, Modal } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 import { colors } from "../theme/colors";
 import { size } from "../theme/fonts";
 import { ListsData } from "../utils/tempData";
-// import List from "../components/molecules/List";
 import Spacer from "../components/atoms/Spacer";
 import AnimatedScrollView from "../components/AnimatedScrollView/AnimatedScrollView";
-import List from "../components/molecules/List";
+import AddListModal from "../components/Modals/AddListModal";
 
 const TodoList = () => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const closeModal = () => setShowModal(!showModal);
+
   return (
     <View style={styles.container}>
+      <AddListModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        closeModal={closeModal}
+      />
       <View style={styles.containerTitle}>
         <View style={styles.divider} />
         <Text style={styles.title}>
@@ -30,23 +32,16 @@ const TodoList = () => {
       <Spacer verticalSpacing={48} />
 
       <View>
-        <TouchableOpacity style={styles.addList}>
+        <TouchableOpacity
+          style={styles.addList}
+          onPress={() => setShowModal(!showModal)}
+        >
           <AntDesign color={colors.blue} size={size.font18} name="plus" />
         </TouchableOpacity>
         <Text style={styles.addText}>Add List</Text>
       </View>
 
       <Spacer verticalSpacing={48} />
-
-      {/* <View style={styles.containerSlide}>
-        <FlatList
-          keyExtractor={item => item.id.toString()}
-          data={ListsData}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item, index }) => <List list={item} index={index} />}
-        />
-      </View> */}
       <AnimatedScrollView boxes={ListsData} />
     </View>
   );

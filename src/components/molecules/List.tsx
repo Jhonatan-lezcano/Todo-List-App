@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import Animated from "react-native-reanimated";
+import { StyleSheet, Text, View, Animated } from "react-native";
 
 import { lists } from "../../utils/tempData";
 import { colors } from "../../theme/colors";
@@ -9,20 +8,22 @@ import { size } from "../../theme/fonts";
 interface Props {
   list: lists;
   index: number;
-  perspectiveStyle: any;
 }
 
-const List = ({ list, index, perspectiveStyle }: Props) => {
+const List = ({ list, index }: Props) => {
   const { name, color, todos } = list;
   const completed = todos.filter(item => item.complete).length;
   const pending = todos.length - completed;
+
+  // console.log(rotateX);
 
   return (
     <Animated.View
       style={[
         styles.listContainer,
-        perspectiveStyle,
-        { marginLeft: index > 0 ? 0 : 32 },
+        {
+          marginLeft: index > 0 ? 0 : 32,
+        },
       ]}
     >
       <View style={[styles.list, { backgroundColor: color }]}>
