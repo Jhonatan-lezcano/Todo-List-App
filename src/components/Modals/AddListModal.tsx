@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Modal,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 
 import { size } from "../../theme/fonts";
@@ -16,15 +15,14 @@ import InputBorders from "../atoms/InputBorders";
 import Spacer from "../atoms/Spacer";
 import { dataPalettes, colorpalettesType } from "../../utils/colorPalettes";
 import { ListsData } from "../../utils/tempData";
-import { stylesModal } from "./stylesModals";
+import ModalContainer from "../atoms/ModalContainer";
 
 interface Props {
   showModal: boolean;
-  setShowModal: Function;
   closeModal: Function;
 }
 
-const AddListModal = ({ showModal, setShowModal, closeModal }: Props) => {
+const AddListModal = ({ showModal, closeModal }: Props) => {
   const [name, setName] = useState("");
   const [selected, setSelected] = useState(dataPalettes[0].id);
   const [color, setColor] = useState(dataPalettes[0].colors[0]);
@@ -44,7 +42,7 @@ const AddListModal = ({ showModal, setShowModal, closeModal }: Props) => {
       todos: [],
     });
     setName("");
-    setShowModal(!showModal);
+    closeModal();
     setSelected(dataPalettes[0].id);
     setCurrentPalette(dataPalettes[0]);
     setColor(dataPalettes[0].colors[0]);
@@ -57,18 +55,11 @@ const AddListModal = ({ showModal, setShowModal, closeModal }: Props) => {
   }, [selected]);
 
   return (
-    <Modal
-      animationType="slide"
-      visible={showModal}
-      onRequestClose={() => closeModal()}
-    >
-      <KeyboardAvoidingView style={stylesModal.container} behavior="padding">
-        <TouchableOpacity
-          style={stylesModal.closeBtn}
-          onPress={() => closeModal()}
-        >
-          <AntDesign name="close" color={colors.black} size={size.font24} />
-        </TouchableOpacity>
+    <ModalContainer showModal={showModal} closeModal={closeModal}>
+      <KeyboardAvoidingView
+        style={{ width: "100%", paddingHorizontal: 10 }}
+        behavior="padding"
+      >
         <View style={{ alignSelf: "stretch", paddingHorizontal: 32 }}>
           <Text style={styles.title}>Create Todo List</Text>
           <Spacer verticalSpacing={20} />
@@ -112,7 +103,7 @@ const AddListModal = ({ showModal, setShowModal, closeModal }: Props) => {
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-    </Modal>
+    </ModalContainer>
   );
 };
 

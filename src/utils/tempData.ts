@@ -5,7 +5,7 @@ export interface lists {
   todos: todos[];
 }
 
-interface todos {
+export interface todos {
   id: number;
   title: string;
   complete: boolean;

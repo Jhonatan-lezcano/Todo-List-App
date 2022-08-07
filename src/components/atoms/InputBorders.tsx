@@ -6,12 +6,13 @@ interface Props {
   placeHolder: string;
   onchangeText: Function;
   value: string;
+  style?: {};
 }
 
-const InputBorders = ({ placeHolder, onchangeText, value }: Props) => {
+const InputBorders = ({ placeHolder, onchangeText, value, style }: Props) => {
   return (
     <TextInput
-      style={styles.input}
+      style={[styles.input, style]}
       placeholder={placeHolder}
       onChangeText={text => onchangeText(text)}
       value={value}

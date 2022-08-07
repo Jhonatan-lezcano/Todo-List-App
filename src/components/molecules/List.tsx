@@ -1,9 +1,10 @@
-import React from "react";
-import { StyleSheet, Text, View, Animated } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import { lists } from "../../utils/tempData";
 import { colors } from "../../theme/colors";
 import { size } from "../../theme/fonts";
+import AddTodoModal from "../Modals/AddTodoModal";
 
 interface Props {
   list: lists;
@@ -14,11 +15,14 @@ const List = ({ list, index }: Props) => {
   const { name, color, todos } = list;
   const completed = todos.filter(item => item.complete).length;
   const pending = todos.length - completed;
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const closeModal = () => setShowModal(!showModal);
 
   // console.log(rotateX);
 
   return (
-    <Animated.View
+    <View
       style={[
         styles.listContainer,
         {
@@ -26,7 +30,11 @@ const List = ({ list, index }: Props) => {
         },
       ]}
     >
-      <View style={[styles.list, { backgroundColor: color }]}>
+      <AddTodoModal showModal={showModal} closeModal={closeModal} list={list} />
+      <TouchableOpacity
+        style={[styles.list, { backgroundColor: color }]}
+        onPress={() => setShowModal(!showModal)}
+      >
         <Text style={[styles.listTitle, styles.textColor]} numberOfLines={1}>
           {name}
         </Text>
@@ -39,8 +47,8 @@ const List = ({ list, index }: Props) => {
           <Text style={[styles.textColor, styles.count]}>{pending}</Text>
           <Text style={[styles.textColor]}>Pending to do</Text>
         </View>
-      </View>
-    </Animated.View>
+      </TouchableOpacity>
+    </View>
   );
 };
 

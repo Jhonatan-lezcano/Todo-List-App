@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, FlatList } from "react-native";
 // import Animated, {
 //   useSharedValue,
@@ -30,6 +30,8 @@ const AnimatedScrollView = ({ boxes }: Props) => {
   //     ctx.x = contentOffsetX;
   //   },
   // });
+
+  const oppenModal = () => {};
 
   return (
     <View style={{ height: 310 }}>

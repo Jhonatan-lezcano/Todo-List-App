@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Modal } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+  StatusBar,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 import { colors } from "../theme/colors";
@@ -9,18 +16,21 @@ import Spacer from "../components/atoms/Spacer";
 import AnimatedScrollView from "../components/AnimatedScrollView/AnimatedScrollView";
 import AddListModal from "../components/Modals/AddListModal";
 
+console.log(StatusBar.currentHeight);
+
 const TodoList = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const closeModal = () => setShowModal(!showModal);
 
   return (
-    <View style={styles.container}>
-      <AddListModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        closeModal={closeModal}
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor={colors.white}
+        translucent={true}
+        barStyle="dark-content"
       />
+      <AddListModal showModal={showModal} closeModal={() => closeModal()} />
       <View style={styles.containerTitle}>
         <View style={styles.divider} />
         <Text style={styles.title}>
@@ -43,7 +53,7 @@ const TodoList = () => {
 
       <Spacer verticalSpacing={48} />
       <AnimatedScrollView boxes={ListsData} />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -51,10 +61,11 @@ export default TodoList;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
+    backgroundColor: "#fff",
+    flex: 1,
     justifyContent: "center",
+    marginTop: StatusBar.currentHeight,
   },
   containerTitle: {
     flexDirection: "row",
